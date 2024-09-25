@@ -3,10 +3,10 @@
 abstract class EnumManager {
 
 static Map <int,String>vehicleValues = {
-  0 : 'Cycle',
-  1 : 'Regular Car',
-  2 : 'Passenger Car',
-  3 : 'Cargo Van',
-  4 : 'Truk',
+  1 : 'Cycle',
+  2 : 'Regular Car',
+  3 : 'Passenger Car',
+  4 : 'Cargo Van',
+  5 : 'Truk',
 };
 }

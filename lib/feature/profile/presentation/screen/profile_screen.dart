@@ -49,7 +49,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   GlobalKey<FormState> formKey = GlobalKey();
-bool isContinuePressed = false;
+  bool isContinuePressed = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -197,7 +198,6 @@ bool isContinuePressed = false;
                                 }
                               },
                               onChanged: (value) {
-                                entity.vehicleId = 1;
                                 return value;
                               },
                             ),
@@ -216,14 +216,15 @@ bool isContinuePressed = false;
                                   height: AppHeightManager.h05,
                                 ),
                                 MainDropdownWidget(
+                                  hintFontColor: (EnumManager.vehicleValues[
+                                              profileData?.vehicleId]) ==
+                                          null
+                                      ? AppColorManager.greyWithOpacity6
+                                      : AppColorManager.textAppColor,
                                   hint: EnumManager.vehicleValues[
                                           profileData?.vehicleId] ??
                                       "vehicle",
                                   options: [
-                                    NameAndId(
-                                        name:
-                                            EnumManager.vehicleValues[0] ?? "",
-                                        id: "0"),
                                     NameAndId(
                                         name:
                                             EnumManager.vehicleValues[1] ?? "",
@@ -240,12 +241,20 @@ bool isContinuePressed = false;
                                         name:
                                             EnumManager.vehicleValues[4] ?? "",
                                         id: "4"),
+                                    NameAndId(
+                                        name:
+                                            EnumManager.vehicleValues[5] ?? "",
+                                        id: "5"),
                                   ],
                                   borderColor: entity.vehicleId == null &&
-                                          data['vehicle_id'] == null && isContinuePressed ==true
+                                          data['vehicle_id'] == null &&
+                                          isContinuePressed == true
                                       ? Colors.red
                                       : AppColorManager.greyWithOpacity6,
                                   onChanged: (value) {
+
+                                    print(value?.id);
+                                    print('00000000000000000000000000000');
                                     data['vehicle_id'] = value?.id;
                                   },
                                 ),
@@ -258,6 +267,8 @@ bool isContinuePressed = false;
                                 UpdateProfileState>(
                               listener: (context, state) {
                                 if (state.status == CubitStatus.success) {
+                                  data = {};
+
                                   Navigator.of(context).pushNamedAndRemoveUntil(
                                       RouteNamedScreens.mainHome,
                                       (route) => false);

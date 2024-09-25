@@ -12,6 +12,10 @@ import 'package:wasity_captin/feature/delivered_orders/domain/repository/deliver
 import 'package:wasity_captin/feature/delivered_orders/domain/usecase/delivered_orders_usecase.dart';
 import 'package:wasity_captin/feature/delivered_orders/presentation/cubit/signin_cubit/delivered_orders_cubit.dart';
 import 'package:wasity_captin/feature/delivered_orders/presentation/screen/delivered_orders_screen.dart';
+import 'package:wasity_captin/feature/main/data/datasource/remote/main_home_remote.dart';
+import 'package:wasity_captin/feature/main/domain/repository/main_home_repository.dart';
+import 'package:wasity_captin/feature/main/domain/usecase/get_orders_usecase.dart';
+import 'package:wasity_captin/feature/main/presentation/cubit/get_orders_cubit/signin_cubit.dart';
 import 'package:wasity_captin/feature/profile/data/datasource/remote/profile_remote.dart';
 import 'package:wasity_captin/feature/profile/data/repository/profile_repository_impl.dart';
 import 'package:wasity_captin/feature/profile/domain/repository/profile_respository.dart';
@@ -19,6 +23,7 @@ import 'package:wasity_captin/feature/profile/domain/usecase/update_profile_usec
 import 'package:wasity_captin/feature/profile/presentation/cubit/get_profile_cubit/get_profile_cubit.dart';
 import 'package:wasity_captin/feature/profile/presentation/cubit/update_profile_cubit/update_profile_cubit.dart';
 
+import '../../feature/main/data/datasource/repository/main_home_repository_impl.dart';
 import '../../feature/profile/domain/usecase/get_profile_usecase.dart';
 
 final sl = GetIt.instance;
@@ -46,4 +51,10 @@ Future<void> init() async {
       () => DeliveredOrdersRepositoryImpl(remote: sl()));
   sl.registerLazySingleton<DeliveredOrdersRemote>(
       () => DeliveredOrdersRemoteImpl());
+
+  sl.registerFactory(() => GetOrdersCubit(usecase: sl()));
+  sl.registerLazySingleton(() => GetOrdersUsecase(repository: sl()));
+  sl.registerLazySingleton<MainHomeRepository>(
+      () => MainHomeRepositoryImpl(remote: sl()));
+  sl.registerLazySingleton<MainHomeRemote>(() => MainHomeRemoteImpl());
 }

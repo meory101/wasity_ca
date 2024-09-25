@@ -66,7 +66,10 @@ class _TitleMapAppFormFiledState extends State<TitleMapAppFormFiled> {
             focusNode: widget.focusNode,
             onTap: () async{
             String? latLong = await  Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return MapScreen();
+              return MapScreen(
+                // lat: '${widget.initLat}' ,
+                // long: '${widget.initLon}' ,
+              );
             },));
             widget.onMarkerTap!(latLong);
             },
@@ -76,8 +79,8 @@ class _TitleMapAppFormFiledState extends State<TitleMapAppFormFiled> {
                     onTap: () async{
                       String? latLong = await  Navigator.push(context, MaterialPageRoute(builder: (context) {
                         return MapScreen(
-                          lat: '${widget.initLat}' ,
-                          long: '${widget.initLon}' ,
+                          // lat: '${widget.initLat}' ,
+                          // long: '${widget.initLon}' ,
                         );
                       },));
                       widget.onMarkerTap!(latLong);

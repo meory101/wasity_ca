@@ -10,16 +10,18 @@ import 'package:wasity_captin/feature/auth/presentation/cubit/verify_code_cubit/
 import 'package:wasity_captin/feature/auth/presentation/screen/signin_screen.dart';
 import 'package:wasity_captin/feature/auth/presentation/screen/verify_code_screen.dart';
 import 'package:wasity_captin/feature/delivered_orders/presentation/cubit/signin_cubit/delivered_orders_cubit.dart';
+import 'package:wasity_captin/feature/main/domain/entity/request/get_orders_request_entity.dart';
 import 'package:wasity_captin/feature/main/presentation/screen/main_home.dart';
 import 'package:wasity_captin/feature/map/screen/map_screen.dart';
 import 'package:wasity_captin/feature/profile/presentation/cubit/get_profile_cubit/get_profile_cubit.dart';
 import 'package:wasity_captin/feature/profile/presentation/cubit/update_profile_cubit/update_profile_cubit.dart';
 import 'package:wasity_captin/feature/profile/presentation/screen/profile_screen.dart';
 import '../core/injection/injection_container.dart' as di;
+import '../feature/main/presentation/cubit/get_orders_cubit/signin_cubit.dart';
 
 abstract class RouteNamedScreens {
-  static String init =  signin;
-      // AppSharedPreferences.getUserId().isEmpty ? signin : mainHome;
+  static String init =
+      AppSharedPreferences.getUserId().isEmpty ? signin : mainHome;
   static const String map = '/map';
   static const String signin = '/login';
   static const String verifyCode = '/verify-code';
@@ -60,7 +62,19 @@ abstract class AppRouter {
           ),
         ));
       case RouteNamedScreens.mainHome:
-        return FadeBuilderRoute(page: const MainHomeScreen());
+        return FadeBuilderRoute(
+            page: MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) => di.sl<GetOrdersCubit>()
+                ..getOrders(
+                  entity: GetOrdersRequestEntity(
+                      vehicleId: AppSharedPreferences.getVehicleId()),
+                ),
+            ),
+          ],
+          child: const MainHomeScreen(),
+        ));
       case RouteNamedScreens.profile:
         return FadeBuilderRoute(
           page: MultiBlocProvider(

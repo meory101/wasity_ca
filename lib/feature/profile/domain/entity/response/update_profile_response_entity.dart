@@ -22,9 +22,9 @@ class UpdateProfileResponseEntity {
       dynamic gender, 
       dynamic birthDate, 
       String? image, 
-      String? number, 
-      num? lat, 
-      num? long, 
+      String? number,
+    String? lat,
+    String? long,
       String? vehicleId,
       String? createdAt, 
       String? updatedAt,}){
@@ -50,8 +50,8 @@ class UpdateProfileResponseEntity {
     _birthDate = json['birth_date'];
     _image = json['image'];
     _number = json['number'];
-    _lat = json['lat'];
-    _long = json['long'];
+    _lat = json['lat'].toString();
+    _long = json['long'].toString();
     _vehicleId = json['vehicle_id'].toString();
     _createdAt = json['created_at'];
     _updatedAt = json['updated_at'];
@@ -63,8 +63,8 @@ class UpdateProfileResponseEntity {
   dynamic _birthDate;
   String? _image;
   String? _number;
-  num? _lat;
-  num? _long;
+  String? _lat;
+  String? _long;
   String? _vehicleId;
   String? _createdAt;
   String? _updatedAt;
@@ -75,8 +75,8 @@ UpdateProfileResponseEntity copyWith({  num? id,
   dynamic birthDate,
   String? image,
   String? number,
-  num? lat,
-  num? long,
+  String? lat,
+  String? long,
   String? vehicleId,
   String? createdAt,
   String? updatedAt,
@@ -100,8 +100,8 @@ UpdateProfileResponseEntity copyWith({  num? id,
   dynamic get birthDate => _birthDate;
   String? get image => _image;
   String? get number => _number;
-  num? get lat => _lat;
-  num? get long => _long;
+  String? get lat => _lat;
+  String? get long => _long;
   String? get vehicleId => _vehicleId;
   String? get createdAt => _createdAt;
   String? get updatedAt => _updatedAt;
