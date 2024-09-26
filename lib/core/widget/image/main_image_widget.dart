@@ -3,8 +3,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:wasity_captin/core/resource/size_manager.dart';
 
 import '../../resource/color_manager.dart';
 import '../../resource/image_manager.dart';
@@ -77,9 +79,11 @@ class MainProgressImageWidget extends StatelessWidget {
       baseColor: AppColorManager.shimmerBaseColor,
       highlightColor: AppColorManager.shimmerHighlightColor,
       child: Container(
+
         width: width,
         height: height,
         decoration: const BoxDecoration(
+
           color: AppColorManager.shimmerBaseColor,
         ),
       ),

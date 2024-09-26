@@ -28,6 +28,7 @@ import '../../domain/entity/response/get_profile_respponse_entity.dart';
 
 Map data = {};
 File? image;
+GetProfileResponseEntity? profileData;
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -37,7 +38,6 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  GetProfileResponseEntity? profileData;
   UpdateProfileRequestEntity entity = UpdateProfileRequestEntity();
   String? name;
   String? gender;
@@ -252,7 +252,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       ? Colors.red
                                       : AppColorManager.greyWithOpacity6,
                                   onChanged: (value) {
-
                                     print(value?.id);
                                     print('00000000000000000000000000000');
                                     data['vehicle_id'] = value?.id;

@@ -12,6 +12,7 @@ import 'package:wasity_captin/feature/auth/presentation/screen/verify_code_scree
 import 'package:wasity_captin/feature/delivered_orders/presentation/cubit/signin_cubit/delivered_orders_cubit.dart';
 import 'package:wasity_captin/feature/main/domain/entity/request/get_orders_request_entity.dart';
 import 'package:wasity_captin/feature/main/presentation/screen/main_home.dart';
+import 'package:wasity_captin/feature/main/presentation/screen/order_details_screen.dart';
 import 'package:wasity_captin/feature/map/screen/map_screen.dart';
 import 'package:wasity_captin/feature/profile/presentation/cubit/get_profile_cubit/get_profile_cubit.dart';
 import 'package:wasity_captin/feature/profile/presentation/cubit/update_profile_cubit/update_profile_cubit.dart';
@@ -28,6 +29,7 @@ abstract class RouteNamedScreens {
   static const String mainHome = '/main-home';
   static const String profile = '/profile';
   static const String deliveredOrders = '/delivered-orders';
+  static const String orderDetails = '/order-details';
 }
 
 abstract class AppRouter {
@@ -89,7 +91,13 @@ abstract class AppRouter {
             child: const ProfileScreen(),
           ),
         );
+      case RouteNamedScreens.orderDetails:
+        argument as OrderDetailsArgs;
+        return FadeBuilderRoute(
+          page:
+             OrderDetailsScreen(args: argument,),
 
+        );
       case RouteNamedScreens.deliveredOrders:
         return FadeBuilderRoute(
           page: MultiBlocProvider(
