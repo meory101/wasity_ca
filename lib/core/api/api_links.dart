@@ -11,6 +11,7 @@ class ApiGetUrl {
 
 class ApiPostUrl {
 static String generateOTP = '${AppConstantManager.baseUrl}generateOTP';
+static String assignOrderToDelivery = '${AppConstantManager.baseUrl}assignOrderToDelivery';
 static String getDeliveryOrders = '${AppConstantManager.baseUrl}getDeliveryOrders';
 static String clientDeliveryLogin = '${AppConstantManager.baseUrl}clientDeliveryLogin';
 static String updateDeliveryProfile = '${AppConstantManager.baseUrl}updateDeliveryProfile';

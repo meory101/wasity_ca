@@ -15,7 +15,9 @@ import 'package:wasity_captin/feature/delivered_orders/presentation/screen/deliv
 import 'package:wasity_captin/feature/main/data/datasource/remote/main_home_remote.dart';
 import 'package:wasity_captin/feature/main/domain/repository/main_home_repository.dart';
 import 'package:wasity_captin/feature/main/domain/usecase/get_orders_usecase.dart';
+import 'package:wasity_captin/feature/main/domain/usecase/take_order_usecase.dart';
 import 'package:wasity_captin/feature/main/presentation/cubit/get_orders_cubit/signin_cubit.dart';
+import 'package:wasity_captin/feature/main/presentation/cubit/take_order_cubit/take_order_cubit.dart';
 import 'package:wasity_captin/feature/profile/data/datasource/remote/profile_remote.dart';
 import 'package:wasity_captin/feature/profile/data/repository/profile_repository_impl.dart';
 import 'package:wasity_captin/feature/profile/domain/repository/profile_respository.dart';
@@ -53,7 +55,9 @@ Future<void> init() async {
       () => DeliveredOrdersRemoteImpl());
 
   sl.registerFactory(() => GetOrdersCubit(usecase: sl()));
+  sl.registerFactory(() => TakeOrderCubit(usecase: sl()));
   sl.registerLazySingleton(() => GetOrdersUsecase(repository: sl()));
+  sl.registerLazySingleton(() => TakeOrderUsecase(repository: sl()));
   sl.registerLazySingleton<MainHomeRepository>(
       () => MainHomeRepositoryImpl(remote: sl()));
   sl.registerLazySingleton<MainHomeRemote>(() => MainHomeRemoteImpl());

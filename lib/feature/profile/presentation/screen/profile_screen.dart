@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:wasity_captin/core/helper/app_image_helper.dart';
@@ -74,6 +75,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           bottomLeft: Radius.circular(AppRadiusManager.r15),
                           bottomRight: Radius.circular(AppRadiusManager.r15),
                         ),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: Container(
+                        margin: const EdgeInsets.only(top: 50),
+                        child: IconButton(
+                            onPressed: () {
+                              profileData = GetProfileResponseEntity();
+                              image =null;
+                              data = {};
+                              Navigator.of(context).pushNamedAndRemoveUntil(
+                                  RouteNamedScreens.signin, (route) => false);
+                            },
+                            icon: const Icon(
+                              Icons.logout,
+                              color: AppColorManager.white,
+                              size: 20,
+                            )),
                       ),
                     ),
                     Align(

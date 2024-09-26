@@ -100,8 +100,7 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
                     ),
                     InkWell(
                       onTap: () {
-                        print(AppConstantManager.imageUrl +
-                            (profileData!.image ?? ""));
+
                         Navigator.of(context)
                             .pushNamed(RouteNamedScreens.profile);
                       },

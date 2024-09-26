@@ -11,6 +11,7 @@ import 'package:wasity_captin/feature/auth/presentation/screen/signin_screen.dar
 import 'package:wasity_captin/feature/auth/presentation/screen/verify_code_screen.dart';
 import 'package:wasity_captin/feature/delivered_orders/presentation/cubit/signin_cubit/delivered_orders_cubit.dart';
 import 'package:wasity_captin/feature/main/domain/entity/request/get_orders_request_entity.dart';
+import 'package:wasity_captin/feature/main/presentation/cubit/take_order_cubit/take_order_cubit.dart';
 import 'package:wasity_captin/feature/main/presentation/screen/main_home.dart';
 import 'package:wasity_captin/feature/main/presentation/screen/order_details_screen.dart';
 import 'package:wasity_captin/feature/map/screen/map_screen.dart';
@@ -94,9 +95,12 @@ abstract class AppRouter {
       case RouteNamedScreens.orderDetails:
         argument as OrderDetailsArgs;
         return FadeBuilderRoute(
-          page:
-             OrderDetailsScreen(args: argument,),
-
+          page: BlocProvider(
+            create: (context) =>  di.sl<TakeOrderCubit>(),
+            child: OrderDetailsScreen(
+              args: argument,
+            ),
+          ),
         );
       case RouteNamedScreens.deliveredOrders:
         return FadeBuilderRoute(
