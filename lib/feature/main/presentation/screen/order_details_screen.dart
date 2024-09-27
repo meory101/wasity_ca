@@ -26,6 +26,8 @@ import '../../../../router/router.dart';
 import '../../domain/entity/response/get_orders_response_entity.dart';
 import 'package:http/http.dart' as http;
 
+Position? position;
+
 class OrderDetailsScreen extends StatefulWidget {
   final OrderDetailsArgs _args;
 
@@ -47,7 +49,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   }
 
   Set<Marker> markers = {};
-  Position? position;
+  Set<Polyline> polyLines = {};
   List points = [];
 
   getMarkers() async {
@@ -78,10 +80,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
         ),
       ),
     );
-    await Geolocator.getCurrentPosition().then((value) {
-      position = value;
-      print(value);
-      print('0000000000000000000000');
+    if (position != null) {
       markers.add(
         Marker(
           icon: BitmapDescriptor.defaultMarkerWithHue(30),
@@ -89,14 +88,31 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
             "71",
           ),
           position: LatLng(
-            (value.latitude ?? 0.0).toDouble(),
-            (value.longitude ?? 0.0).toDouble(),
+            (position?.latitude ?? 0.0).toDouble(),
+            (position?.longitude ?? 0.0).toDouble(),
           ),
         ),
       );
-      setState(() {});
-      return null;
-    });
+    }
+    if (position == null) {
+      await Geolocator.getCurrentPosition().then((value) {
+        position = value;
+        markers.add(
+          Marker(
+            icon: BitmapDescriptor.defaultMarkerWithHue(30),
+            markerId: const MarkerId(
+              "71",
+            ),
+            position: LatLng(
+              (value.latitude ?? 0.0).toDouble(),
+              (value.longitude ?? 0.0).toDouble(),
+            ),
+          ),
+        );
+        setState(() {});
+        return null;
+      });
+    }
   }
 
   checkPath() async {
@@ -104,7 +120,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
       NoteMessage.showErrorSnackBar(
           context: context, text: "Please Wait To Get Your Current Position");
     }
-    print(points);
+    print(points.toSet().toList());
     print([position?.latitude ?? 0.0, position?.longitude ?? 0.0]);
     print([
       (widget._args.order?.address?.lat ?? 0.0).toDouble(),
@@ -115,16 +131,25 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
         Uri.parse('http://192.168.215.164:5000/api/findOptimalPath'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
-          'points': points,
+          'points': points.toSet().toList(),
           'startPoint': [position?.latitude ?? 0.0, position?.longitude ?? 0.0],
           'targetPoint': [
             (widget._args.order?.address?.lat ?? 0.0).toDouble(),
             (widget._args.order?.address?.long ?? 0.0).toDouble(),
           ]
         }));
+    var body = jsonDecode(jsonEncode(response.body));
+    List<LatLng> polyPoints = [];
+    // for (int i = 0; i < body.length; i++) {
+    //   polyPoints.add(LatLng(body[i][0].toDouble(), body[i][1].toDouble()));
+    // }
+    print(polyPoints);
     print(response.statusCode);
     print(jsonDecode(jsonEncode(response.body)));
     print('response body');
+    polyLines.add(
+      Polyline(polylineId: PolylineId("00"), points: polyPoints),
+    );
   }
 
   @override
@@ -212,6 +237,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
               height: AppHeightManager.h60,
               width: AppWidthManager.w100,
               child: GoogleMap(
+                polylines: polyLines ?? {},
                 markers: markers,
                 initialCameraPosition: CameraPosition(
                   target: markers.first.position,
